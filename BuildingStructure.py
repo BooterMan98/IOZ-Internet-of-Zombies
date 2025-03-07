@@ -1,7 +1,9 @@
+import uuid
 
 class Building:
     def __init__(self, floors = 5, rooms = 2):
         self.floors = [Floor(rooms, floorNumber) for floorNumber in range(floors)]
+        self.floors = [Floor(self ,rooms, floorNumber) for floorNumber in range(floors)]
 
     def display(self):
         print(f"This is a {self.floors.count} story building with {self.rooms.count} rooms on each floor.")
@@ -28,7 +30,7 @@ class Floor:
         self.rooms = [Room(self, self.id, roomNumber) for roomNumber in range(rooms)]
 
     def display(self):
-        print(f"this is the floor number {self.id} with {self.rooms.count} rooms")
+        print(f"this is the floor number {self.id} with {len(self.rooms)} rooms")
 
     def getRoomsAdyacentTo(self, roomId):
         roomNumber = roomId%100
@@ -64,7 +66,7 @@ class Room:
         if self.id % 5 == 0:
             return True
         
-    def getRoomsAdyacent():
+    def getRoomsAdyacent(self):
         return self.floor.getRoomsAdyacentTo(self.id)
     
     def somethingMovesInOrOut(self):
