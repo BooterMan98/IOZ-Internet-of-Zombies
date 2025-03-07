@@ -1,3 +1,4 @@
+import random
 import BuildingStructure
 
 class Simulation:
@@ -7,11 +8,11 @@ class Simulation:
     self.zombies[0].currentRoom = self.getinitialRoomForOutbreak()
 
   def getinitialRoomForOutbreak(self):
-    return self.building.floors[0].rooms[0]
+    return self.building.floors[0].rooms[0].id
 
   def playSimulationTurn(self):
-
-    for zombie in self.zombies:
+    zombiesCopy = self.zombies.copy()
+    for zombie in zombiesCopy:
       action = zombie.doSomething()
       if action[0] == "expand":
         for room in action[1]:
@@ -19,8 +20,10 @@ class Simulation:
           newZombie.currentRoom = room.id
           room.somethingMovesInOrOut()
           self.zombies.append(newZombie)
+          #print(f"Zombies have expanded to room {room.id}")
       elif action[0] == "move":
         room = self.building.getRoom(action[1])
+        #print(f"Zombie has moved to room {room.id}")
         room.somethingMovesInOrOut()
       else:
         pass
@@ -29,7 +32,7 @@ class Simulation:
     room = self.building.getRoom(roomId)
     return room.getRoomsAdyacentTo(roomId)
   
-  
+
 class Zombie:
   def __init__(self, simulation):
     self.simulation = simulation
@@ -42,13 +45,12 @@ class Zombie:
     if self.currentRoom is None:
       return None
     else:
-      rooms = self.currentRoom.getRoomsAdyacentTo(self.currentRoom.id)
+      rooms = self.simulation.building.getRoom(self.currentRoom).getRoomsAdyacent()
       if len(rooms) == 0:
         return
     doImoveOrExpand = bool(random.getrandbits(1))
     if doImoveOrExpand:
       self.currentRoom = rooms[random.randint(0, len(rooms)-1)].id
-      # Do not forget to activate sensor
       return ("move", self.currentRoom)
     else:
       return ("expand", rooms)
