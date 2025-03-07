@@ -29,12 +29,7 @@ These are the commands you can use. when runing the simulator you'll be asked to
 
 There are 6 classes implemented for this proyect:  
 
-`Building`,
-`Floor`,
-`Room`,
-`IOTSensor`,
-`Simulator` and
-`Zombie`
+![UML Diagram](./assets/uml%20diagram.png)
 
 The `Building`,
 `Floor`,
@@ -43,3 +38,4 @@ The `Building`,
 The `Zombie` instances only move between rooms or expands to new roms with new instances in that case.
 
 So, as zombies doesn't know anything about sensors, how does the sensor knows a zombie entered a room?  In real life, the sensor is reading constantly with the data it gathers and when it detects something it raises and alert and changes it's state. This is *simulated* here through the `Simulation` instance. Whenever a zombie tell the simulator that it wants to move to a room, the Zombie gets moved to the room and the simulator tells the respecting `Sensor` the movement has been made by calling a function.
+
