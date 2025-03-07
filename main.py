@@ -4,16 +4,27 @@ import sys
 def main():
   ### Main loop
   simulation = None
+  help = """
+  Commands:
+  create - Create a building
+  check - Check building status
+  play - Play simulation
+  exit - Exit program
+  """
+  print(help)
   while True:
-    command = int(input("Insert a command: \n"))
-    if command == 1:
+    command = input("Insert a command: \n")
+    if command == "create":
       simulation = setupBuilding(simulation)
-    elif command == 2:
+    elif command == "check":
       viewBuildingState(simulation)
-    elif command == 3:
+    elif command == "play":
       playSimulation(simulation)
-    elif command == 4:
+    elif command == "exit":
       exit()
+    else:
+      print("Invalid command")
+      print(help)
 
 #### Commands:
 
