@@ -8,6 +8,18 @@ class Building:
         print(f"Checking {len(self.floors)} story building status...")
         for floor in self.floors:
             floor.display()
+    
+    def displayFloor(self, floorId):
+        try:
+            self.floors[floorId].display()
+        except IndexError:
+            print("Invalid floor number")
+    
+    def displayRoom(self, roomId):
+        try:
+            self.getRoom(roomId).display()
+        except IndexError:
+            print("Invalid room number")
 
     def identifyFloor(self, roomId):
         return roomId//100
@@ -82,13 +94,18 @@ class IOTSensor:
         self.id = uuid.uuid4()
         self.roomAsigned = room
         self.state = "idle"
+        self.counter = 0
 
     def detectMovement(self):
         self.state = "alert"
+        self.counter = 2
         #self.display()
 
-    def noMovementDetected(self):
-        self.state = "idle"
+    def passTurn(self):
+        if self.counter > 0:
+            self.counter -= 1
+        if self.counter <= 0:
+            self.state = "idle"
         #self.display()
 
     def display(self):

@@ -32,6 +32,15 @@ class Simulation:
     room = self.building.getRoom(roomId)
     return room.getRoomsAdyacentTo(roomId)
   
+  def displayBuilding(self):
+    self.building.display()
+
+  def displayFloor(self, floorId):
+    self.building.displayFloor(floorId)
+
+  def displayRoom(self, roomId):
+    self.building.displayRoom(roomId)
+  
 
 class Zombie:
   def __init__(self, simulation):

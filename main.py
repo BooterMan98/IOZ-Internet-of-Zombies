@@ -36,17 +36,20 @@ def setupBuilding(simulation):
 
 def viewBuildingState(simulation):
   if simulation != None:
-    simulation.building.display()
     choice = input("Enter if you want to check floor status, a specific room or the whole building: [b/f/r]\n")
     ## TODO: create method for geting floor and room status
+    choice = choice.lower()
+    choice = choice.strip()
     if choice == "f":
       floor = int(input("Enter the floor number:\n"))
-      simulation.building.floors[floor].display()
+      simulation.displayFloor(floor)
     elif choice == "r":
       room = int(input("Enter the room number:\n"))
-      (simulation.building.getRoom(room)).display()
+      simulation.displayRoom(room)
     elif choice == "b":
-      simulation.building.display()
+      simulation.displayBuilding()
+    else:
+      print("Invalid choice")
   else:
     print("There is no building in place")
 
