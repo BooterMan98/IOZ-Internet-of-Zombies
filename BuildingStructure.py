@@ -2,20 +2,21 @@ import uuid
 
 class Building:
     def __init__(self, floors = 5, rooms = 2):
-        self.floors = [Floor(rooms, floorNumber) for floorNumber in range(floors)]
         self.floors = [Floor(self ,rooms, floorNumber) for floorNumber in range(floors)]
 
     def display(self):
-        print(f"This is a {self.floors.count} story building with {self.rooms.count} rooms on each floor.")
+        print(f"Checking {len(self.floors)} story building status...")
+        for floor in self.floors:
+            floor.display()
 
-    def identifyFloor(roomId):
+    def identifyFloor(self, roomId):
         return roomId//100
     
     def getRoom(self, roomId):
         floorId = self.identifyFloor(roomId)
-        self.floors[floorId].getRoom(roomId)
-    
-    def RoomsOnOtherFloorsAdyacentTo(self, floorId, roomId):
+        return self.floors[floorId].getRoom(roomId)
+
+    def roomsOnOtherFloorsAdyacentTo(self, floorId, roomId):
         rooms = []
         if floorId > 0:
             rooms.extend(self.floors[floorId-1].getRoomsAdyacentTo(roomId))
@@ -30,7 +31,9 @@ class Floor:
         self.rooms = [Room(self, self.id, roomNumber) for roomNumber in range(rooms)]
 
     def display(self):
-        print(f"this is the floor number {self.id} with {len(self.rooms)} rooms")
+        print(f"Checking floor {self.id} with {len(self.rooms)} rooms...")
+        for room in self.rooms:
+            room.display()
 
     def getRoomsAdyacentTo(self, roomId):
         roomNumber = roomId%100
@@ -45,11 +48,13 @@ class Floor:
         if roomNumber < len(self.rooms)-1:
             rooms.append(self.rooms[roomNumber+1])
         if self.rooms[roomNumber - 1].stairsAvailable():
-            Building.RoomsOnOtherFloorsAdyacentTo(self.id,roomId)
+            rooms.extend(self.buidling.roomsOnOtherFloorsAdyacentTo(floorId=self.id, roomId=roomId))
 
         return rooms
     
     def getRoom(self, roomId):
+        if roomId//100 != self.id:
+            return None
         roomNumber = roomId%100
         return self.rooms[roomNumber]
 
@@ -60,7 +65,7 @@ class Room:
         self.IOTSendsor = IOTSensor(self)
 
     def display(self):
-        print("this is a room")
+        self.IOTSendsor.display()
 
     def stairsAvailable(self):
         if self.id % 5 == 0:
@@ -80,11 +85,11 @@ class IOTSensor:
 
     def detectMovement(self):
         self.state = "alert"
-        self.display()
+        #self.display()
 
     def noMovementDetected(self):
         self.state = "idle"
-        self.display()
+        #self.display()
 
     def display(self):
         print(f"The sensor of room {self.roomAsigned.id} is {self.state}")

@@ -31,9 +31,22 @@ def setupBuilding(simulation):
     else:
       print("There is already a building in place")
     return None
+
+
+
 def viewBuildingState(simulation):
   if simulation != None:
     simulation.building.display()
+    choice = input("Enter if you want to check floor status, a specific room or the whole building: [b/f/r]\n")
+    ## TODO: create method for geting floor and room status
+    if choice == "f":
+      floor = int(input("Enter the floor number:\n"))
+      simulation.building.floors[floor].display()
+    elif choice == "r":
+      room = int(input("Enter the room number:\n"))
+      (simulation.building.getRoom(room)).display()
+    elif choice == "b":
+      simulation.building.display()
   else:
     print("There is no building in place")
 
