@@ -9,6 +9,10 @@ class Building:
     def identifyFloor(roomId):
         return roomId//100
     
+    def getRoom(self, roomId):
+        floorId = self.identifyFloor(roomId)
+        self.floors[floorId].getRoom(roomId)
+    
     def RoomsOnOtherFloorsAdyacentTo(self, floorId, roomId):
         rooms = []
         if floorId > 0:
@@ -42,6 +46,10 @@ class Floor:
             Building.RoomsOnOtherFloorsAdyacentTo(self.id,roomId)
 
         return rooms
+    
+    def getRoom(self, roomId):
+        roomNumber = roomId%100
+        return self.rooms[roomNumber]
 
 class Room:
     def __init__(self, floor ,floorId, roomNumber):
@@ -59,7 +67,7 @@ class Room:
     def getRoomsAdyacent():
         return self.floor.getRoomsAdyacentTo(self.id)
     
-    def SomethingMovesInOrOut(self):
+    def somethingMovesInOrOut(self):
         self.IOTSendsor.detectMovement()
 
 class IOTSensor:
