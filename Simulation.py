@@ -27,6 +27,10 @@ class Simulation:
         room.somethingMovesInOrOut()
       else:
         pass
+    rooms = self.building.getAllRooms()
+    # Iterate through rooms and pass the turn to the IOTSensor
+    for room in rooms:
+      room.IOTSendsor.passTurn()
 
   def getRoomDestinations(self, roomId):
     room = self.building.getRoom(roomId)

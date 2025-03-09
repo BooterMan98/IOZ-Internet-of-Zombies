@@ -27,6 +27,12 @@ class Building:
     def getRoom(self, roomId):
         floorId = self.identifyFloor(roomId)
         return self.floors[floorId].getRoom(roomId)
+    
+    def getAllRooms(self):
+        rooms = []
+        for floor in self.floors:
+            rooms.extend(floor.rooms)
+        return rooms
 
     def roomsOnOtherFloorsAdyacentTo(self, floorId, roomId):
         rooms = []
