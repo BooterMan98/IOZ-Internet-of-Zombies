@@ -7,11 +7,13 @@ class Simulation:
     self.zombies =[Zombie(self)]
     self.zombies[0].currentRoom = self.getinitialRoomForOutbreak()
 
+
   def getinitialRoomForOutbreak(self):
     return self.building.floors[0].rooms[0].id
 
   def playSimulationTurn(self):
     zombiesCopy = self.zombies.copy()
+    # Iterate through zombies nad make them move or expand.
     for zombie in zombiesCopy:
       action = zombie.doSomething()
       if action[0] == "expand":
@@ -52,7 +54,9 @@ class Zombie:
     self.currentRoom = None
 
 
-
+  # make the zombie move or expands. 
+  # If it moves, it will move to a random room adyacent to the current room. it returns the command and the room id.
+  # if it expands, it will return the command and a list of rooms adyacent to the current room.
   def doSomething(self):
     rooms = []
     if self.currentRoom is None:
